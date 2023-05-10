@@ -1,7 +1,7 @@
 from django.db import models
 from ckeditor_uploader.fields import RichTextUploadingField
 
-from users.models import User
+from user.models import User
 
 
 class Article(models.Model):
