@@ -21,3 +21,13 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         print(validated_data)
         return User()
+    
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        token['email'] = user.email
+
+        return token

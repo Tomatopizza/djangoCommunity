@@ -28,7 +28,8 @@ class User(AbstractBaseUser):
     bio = models.TextField("자기소개", max_length=128, blank=True, default="")
     # imgfile = models.CharField("사진", max_length=128)
 
-
+    is_active = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=False)
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []
     objects = UserManager()
