@@ -3,7 +3,10 @@ from django.contrib.auth import authenticate, login
 
 from rest_framework import status
 from rest_framework import permissions
+from django.http import HttpResponseRedirect
 from rest_framework.views import APIView
+from rest_framework.permissions import AllowAny
+from allauth.account.models import EmailConfirmation, EmailConfirmationHMAC
 from rest_framework.response import Response
 from users.models import Users
 from users.serializers import UserSerializer, CustomTokenObtainPairSerializer
@@ -11,25 +14,31 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
 )
 
+
 class UserView(APIView):
     def get(self, request):
-        return Response({'message': 'get 요청합니다!'})
+        return Response({"message": "get 요청합니다!"})
+
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response({'message': '회원가입 성공'})
+        return Response({"message": "회원가입 성공"})
+
     def put(self, request):
-        return Response({'message': 'put 요청입니다!'})
+        return Response({"message": "put 요청입니다!"})
+
     def delete(self, request):
-        return Response({'message': 'delete 요청입니다!'})
+        return Response({"message": "delete 요청입니다!"})
+
+
 # Create your views here.
 
 
 # class UserLogin(APIView):
 #     serializer_class = CustomTokenObtainPairSerializer
 #     def post(self, request):
-        
+
 #         serializer = self.get_serializer(data=request.data)
 #         serializer.is_valid(raise_exception=True)
 #         user = serializer.validated_data
@@ -42,8 +51,10 @@ class UserView(APIView):
 #         logout(request)
 #         return Response({'message': 'logout'})
 
+
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
+
 
 # class UserLogin(APIView):
 #     permission_classes = [permissions.IsAuthenticated]
@@ -54,3 +65,30 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 #         # user.save()
 #         return Response("get")
 
+
+class ConfirmEmailView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, *args, **kwargs):
+        self.object = confirmation = self.get_object()
+        confirmation.confirm(self.request)
+        # A React Router Route will handle the failure scenario
+        return HttpResponseRedirect("/")  # 인증성공
+
+    def get_object(self, queryset=None):
+        key = self.kwargs["key"]
+        email_confirmation = EmailConfirmationHMAC.from_key(key)
+        if not email_confirmation:
+            if queryset is None:
+                queryset = self.get_queryset()
+            try:
+                email_confirmation = queryset.get(key=key.lower())
+            except EmailConfirmation.DoesNotExist:
+                # A React Router Route will handle the failure scenario
+                return HttpResponseRedirect("/")  # 인증실패
+        return email_confirmation
+
+    def get_queryset(self):
+        qs = EmailConfirmation.objects.all_valid()
+        qs = qs.select_related("email_address__user")
+        return qs
