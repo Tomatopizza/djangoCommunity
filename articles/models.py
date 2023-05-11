@@ -1,13 +1,14 @@
 from django.db import models
-from users.models import User
-# Create your models here.
+from ckeditor_uploader.fields import RichTextUploadingField
+
+from users.models import Users
 
 
 class Article(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
-    content = models.TextField()
-    image = models.ImageField()
+    content = RichTextUploadingField(blank=True, null=True)
+    image = models.ImageField(blank=True, upload_to='%Y/%m/')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -16,7 +17,7 @@ class Article(models.Model):
 
 
 class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
