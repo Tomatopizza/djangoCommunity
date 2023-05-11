@@ -1,9 +1,12 @@
+
+from rest_framework.views import APIView
+from rest_framework.generics import get_object_or_404
+from users.models import User
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
-
 from rest_framework import status
 from rest_framework import permissions
-from rest_framework.views import APIView
+
 from rest_framework.response import Response
 from users.models import Users
 from users.serializers import UserSerializer, CustomTokenObtainPairSerializer
@@ -53,4 +56,16 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 #         # user.is_admin = True
 #         # user.save()
 #         return Response("get")
+
+
+class FollowView(APIView):
+    def post(self, request, user_id):
+        follower_id = get_object_or_404(Users, id=user_id)
+        follow_id = request.user
+        if follow_id in follower_id.followers.all():
+            follower_id.followers.remove(follow_id)
+            return Response("팔로우를 취소하였습니다.", status=status.HTTP_200_OK)
+        else:
+            follower_id.followers.add(follow_id)
+            return Response("팔로우하였습니다.", status=status.HTTP_200_OK)
 
