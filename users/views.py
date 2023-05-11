@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login
 from rest_framework import status
 from rest_framework import permissions
 from rest_framework.response import Response
+from users.models import Users
 from users.serializers import UserSerializer, CustomTokenObtainPairSerializer
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -56,7 +57,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 
 class FollowView(APIView):
     def post(self, request, user_id):
-        follower_id = get_object_or_404(User, id=user_id)
+        follower_id = get_object_or_404(Users, id=user_id)
         follow_id = request.user
         if follow_id in follower_id.followers.all():
             follower_id.followers.remove(follow_id)
