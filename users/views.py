@@ -1,3 +1,4 @@
+
 from rest_framework.views import APIView
 from rest_framework.generics import get_object_or_404
 from users.models import User
@@ -5,6 +6,7 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from rest_framework import status
 from rest_framework import permissions
+
 from rest_framework.response import Response
 from users.models import Users
 from users.serializers import UserSerializer, CustomTokenObtainPairSerializer
@@ -55,6 +57,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 #         # user.save()
 #         return Response("get")
 
+
 class FollowView(APIView):
     def post(self, request, user_id):
         follower_id = get_object_or_404(Users, id=user_id)
@@ -65,3 +68,4 @@ class FollowView(APIView):
         else:
             follower_id.followers.add(follow_id)
             return Response("팔로우하였습니다.", status=status.HTTP_200_OK)
+

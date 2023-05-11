@@ -3,7 +3,9 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from articles.models import Article
+
 from articles.serializers import ArticleSerializer, ArticleListSerializer, ArticleCreateSerializer, CommentSerializer, CommentCreateSerializer
+
 
 class ArticleView(APIView):
     def get(self, request):
@@ -75,3 +77,4 @@ class CommentDetailView(APIView):
 
     def delete(self, request, article_id):
         pass
+
