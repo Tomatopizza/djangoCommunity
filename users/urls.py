@@ -15,7 +15,7 @@ urlpatterns = [
 
     path("signup/", views.UserView.as_view()),
     path(
-        "token/obtain/",
+        "api/token/",
         views.CustomTokenObtainPairView.as_view(),
         name="token_obtain_pair",
     ),
