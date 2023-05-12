@@ -72,7 +72,9 @@ ROOT_URLCONF = "djangCommunity.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "templates")],
+        "DIRS": [
+            os.path.join(BASE_DIR, "templates"),
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -215,15 +217,12 @@ EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = (
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 
 # 이메일에 자동으로 표시되는 사이트 정보
-ACCOUNT_EMAIL_SUBJECT_PREFIX = "[Watti]"
+ACCOUNT_EMAIL_SUBJECT_PREFIX = "[Awe3ome Review]"
 
 AUTHENTICATION_BACKENDS = [
-
-    'django.contrib.auth.backends.ModelBackend',
-
+    "django.contrib.auth.backends.ModelBackend",
     # `allauth` specific authentication methods, such as login by e-mail
-    'allauth.account.auth_backends.AuthenticationBackend',
-
+    "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

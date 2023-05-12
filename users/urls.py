@@ -12,7 +12,6 @@ from users.views import ConfirmEmailView
 from django.conf.urls import include
 
 urlpatterns = [
-
     path("signup/", views.UserView.as_view()),
     path(
         "api/token/",
@@ -24,7 +23,7 @@ urlpatterns = [
     # path('logout', views.UserLogout.as_view()),
     # path('mock/', views.mockView.as_view(), name='mock_view'),
     path("dj-rest-auth/", include("dj_rest_auth.urls")),
-    path('follow/<int:user_id>/', views.FollowView.as_view(), name='follow_view'),
+    path("follow/<int:user_id>/", views.FollowView.as_view(), name="follow_view"),
     path("dj-rest-auth/registration/", include("dj_rest_auth.registration.urls")),
     # 유효한 이메일이 유저에게 전달
     path(
@@ -39,4 +38,3 @@ urlpatterns = [
         name="users_confirm_email",
     ),
 ]
-
