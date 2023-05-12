@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import path
+from dj_rest_auth.registration.views import VerifyEmailView
 from users import views
 
 from rest_framework_simplejwt.views import (
@@ -7,7 +8,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 from users.views import ConfirmEmailView
-from dj_rest_auth.registration.views import VerifyEmailView
+
 from django.conf.urls import include
 
 urlpatterns = [

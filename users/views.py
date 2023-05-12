@@ -10,12 +10,14 @@ from rest_framework import permissions
 from django.http import HttpResponseRedirect
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
-from allauth.account.models import EmailConfirmation, EmailConfirmationHMAC
+
 
 
 
 from rest_framework.response import Response
+from allauth.account.models import EmailConfirmation, EmailConfirmationHMAC
 from users.models import Users
+
 from users.serializers import UserSerializer, CustomTokenObtainPairSerializer
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
