@@ -23,6 +23,7 @@ class UserSerializer(serializers.ModelSerializer):
         return Users()
 
 
+
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, users):

@@ -16,6 +16,7 @@ class Article(models.Model):
         return str(self.title)
 
 
+
 class Comment(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
@@ -25,3 +26,4 @@ class Comment(models.Model):
 
     def __str__(self):
         return str(self.content)
+

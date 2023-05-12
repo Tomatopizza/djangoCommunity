@@ -11,6 +11,7 @@ from users.models import Users
 
 class UserCreationForm(forms.ModelForm):
 
+
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
     password2 = forms.CharField(
         label="Password confirmation", widget=forms.PasswordInput
@@ -39,6 +40,7 @@ class UserCreationForm(forms.ModelForm):
 
 class UserChangeForm(forms.ModelForm):
 
+
     password = ReadOnlyPasswordHashField()
 
     class Meta:
@@ -50,6 +52,7 @@ class UserAdmin(BaseUserAdmin):
 
     form = UserChangeForm
     add_form = UserCreationForm
+
 
     list_display = ["email", "bio", "is_admin"]
     list_filter = ["is_admin"]
@@ -76,3 +79,4 @@ class UserAdmin(BaseUserAdmin):
 admin.site.register(Users, UserAdmin)
 
 admin.site.unregister(Group)
+

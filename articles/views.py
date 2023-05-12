@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from articles.models import Article, Comment
 from articles.serializers import ArticleSerializer, ArticleListSerializer, ArticleCreateSerializer, CommentSerializer, CommentCreateSerializer
 
+
 class ArticleView(APIView):
     def get(self, request):
         articles = Article.objects.all()    # 모든 글을 가져온다
