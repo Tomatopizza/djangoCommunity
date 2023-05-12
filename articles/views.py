@@ -52,6 +52,24 @@ class ArticleDetailView(APIView):
             return Response("권한이 없습니다!", status=status.HTTP_403_FORBIDDEN)
 
 
+class LikeView(APIView):
+    def post(self, request, article_id):
+        article = get_object_or_404(Article, id=article_id)
+        if request.user in article.likes.all():
+            article.likes.remove(request.user)
+            return Response("unlike", status=status.HTTP_200_OK)
+        else:
+            article.likes.add(request.user)
+            return Response("like", status=status.HTTP_200_OK)
+class BookmarkView(APIView):
+    def post(self, request, article_id):
+        article = get_object_or_404(Article, id=article_id)
+        if request.user in article.bookmarks.all():
+            article.bookmarks.remove(request.user)
+            return Response("bookmark 해제", status=status.HTTP_200_OK)
+        else:
+            article.bookmarks.add(request.user)
+            return Response("bookmark 등록", status=status.HTTP_200_OK)
 
 
 class CommentView(APIView):
@@ -77,4 +95,5 @@ class CommentDetailView(APIView):
 
     def delete(self, request, article_id):
         pass
+
 
