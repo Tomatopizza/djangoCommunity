@@ -1,4 +1,3 @@
-
 from rest_framework.views import APIView
 from rest_framework.generics import get_object_or_404
 from users.models import User
@@ -10,8 +9,6 @@ from rest_framework import permissions
 from django.http import HttpResponseRedirect
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
-
-
 
 
 from rest_framework.response import Response
@@ -75,7 +72,6 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 #         return Response("get")
 
 
-
 class ConfirmEmailView(APIView):
     permission_classes = [AllowAny]
 
@@ -103,6 +99,7 @@ class ConfirmEmailView(APIView):
         qs = qs.select_related("email_address__user")
         return qs
 
+
 class FollowView(APIView):
     def post(self, request, user_id):
         follower_id = get_object_or_404(Users, id=user_id)
@@ -113,5 +110,3 @@ class FollowView(APIView):
         else:
             follower_id.followers.add(follow_id)
             return Response("팔로우하였습니다.", status=status.HTTP_200_OK)
-
-
