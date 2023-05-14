@@ -8,7 +8,7 @@ from articles.serializers import ArticleSerializer, ArticleListSerializer, Artic
 
 class ArticleView(APIView):
     def get(self, request):
-        articles = Article.objects.all()    # 모든 글을 가져온다
+        articles = Article.objects.all().order_by('-created_at')    # 모든 글을 가져온다
         serializer = ArticleListSerializer(articles, many=True) # 모든 글을 가져오기 때문에 many=True작성
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -60,6 +60,7 @@ class LikeView(APIView):
         else:
             article.likes.add(request.user)
             return Response("like", status=status.HTTP_200_OK)
+        
 class BookmarkView(APIView):
     def post(self, request, article_id):
         article = get_object_or_404(Article, id=article_id)
