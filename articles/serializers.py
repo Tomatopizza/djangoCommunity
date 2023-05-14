@@ -7,7 +7,7 @@ from articles.models import Article, Comment
 class ArticleSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
 
-    def get_user(self, obj):    # user:id 로 보이던걸 user:email로 보이게 함
+    def get_user(self, obj):   
         return obj.user.email
 
     class Meta:
